@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Play, Pause, SkipBack, SkipForward, Volume2, Heart, Shuffle, Repeat } from 'lucide-react';
 import { useAudio } from '../../context/AudioContext';
 import { gsap } from 'gsap';
@@ -10,7 +10,6 @@ const Player: React.FC = () => {
     volume,
     currentTime,
     duration,
-    playTrack,
     pauseTrack,
     resumeTrack,
     nextTrack,
@@ -18,6 +17,11 @@ const Player: React.FC = () => {
     setVolume,
     seekTo
   } = useAudio();
+
+  const [liked, setLiked] = useState(false);
+  const [shuffle, setShuffle] = useState(false);
+  const [repeat, setRepeat] = useState(false);
+  const [showVolume, setShowVolume] = useState(false);
 
   const playerRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
@@ -47,6 +51,35 @@ const Player: React.FC = () => {
     }
   }, [isPlaying]);
 
+  // Animate button when toggled
+  const animateButton = (ref: React.RefObject<HTMLButtonElement>) => {
+    if (ref.current) {
+      gsap.fromTo(ref.current, 
+        { scale: 1 },
+        { scale: 1.2, duration: 0.2, yoyo: true, repeat: 1, ease: "power2.out" }
+      );
+    }
+  };
+
+  const likeBtnRef = useRef<HTMLButtonElement>(null);
+  const shuffleBtnRef = useRef<HTMLButtonElement>(null);
+  const repeatBtnRef = useRef<HTMLButtonElement>(null);
+
+  const handleLike = () => {
+    setLiked((prev) => !prev);
+    animateButton(likeBtnRef);
+  };
+
+  const handleShuffle = () => {
+    setShuffle((prev) => !prev);
+    animateButton(shuffleBtnRef);
+  };
+
+  const handleRepeat = () => {
+    setRepeat((prev) => !prev);
+    animateButton(repeatBtnRef);
+  };
+
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
@@ -66,6 +99,18 @@ const Player: React.FC = () => {
     setVolume(parseFloat(e.target.value));
   };
 
+  // Close volume slider when clicking outside (mobile)
+  useEffect(() => {
+    if (!showVolume) return;
+    const handleClick = (e: MouseEvent) => {
+      if (!(e.target as HTMLElement).closest('.volume-control-mobile')) {
+        setShowVolume(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [showVolume]);
+
   if (!currentTrack) return null;
 
   return (
@@ -73,30 +118,38 @@ const Player: React.FC = () => {
       ref={playerRef}
       className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-gray-900 to-black border-t border-gray-800 p-4 z-50"
     >
-      <div className="flex items-center justify-between max-w-screen-xl mx-auto">
+      <div className="flex flex-col md:flex-row items-center justify-between max-w-screen-xl mx-auto gap-4">
         {/* Current Track Info */}
-        <div className="flex items-center space-x-4 flex-1 min-w-0">
+        <div className="flex items-center space-x-4 flex-1 min-w-0 w-full md:w-auto mb-2 md:mb-0">
           <div className="relative">
             <img
               ref={albumArtRef}
               src={currentTrack.coverUrl}
               alt={currentTrack.title}
-              className="w-14 h-14 rounded-lg object-cover"
+              className="w-12 h-12 md:w-14 md:h-14 rounded-lg object-cover"
             />
           </div>
           <div className="min-w-0 flex-1">
             <h4 className="text-white font-medium truncate">{currentTrack.title}</h4>
             <p className="text-gray-400 text-sm truncate">{currentTrack.artist}</p>
           </div>
-          <button className="text-gray-400 hover:text-white transition-colors">
-            <Heart size={20} />
+          <button
+            ref={likeBtnRef}
+            onClick={handleLike}
+            className={`transition-colors ${liked ? 'text-green-500 scale-110' : 'text-gray-400 hover:text-white'}`}
+          >
+            <Heart size={20} fill={liked ? "#22c55e" : "none"} />
           </button>
         </div>
 
         {/* Player Controls */}
-        <div className="flex flex-col items-center space-y-2 flex-1 max-w-md">
-          <div className="flex items-center space-x-4">
-            <button className="text-gray-400 hover:text-white transition-colors">
+        <div className="flex flex-col items-center space-y-2 flex-1 max-w-md w-full md:w-auto">
+          <div className="flex items-center justify-center space-x-4">
+            <button
+              ref={shuffleBtnRef}
+              onClick={handleShuffle}
+              className={`transition-colors ${shuffle ? 'text-green-500 scale-110' : 'text-gray-400 hover:text-white'}`}
+            >
               <Shuffle size={20} />
             </button>
             <button 
@@ -117,7 +170,11 @@ const Player: React.FC = () => {
             >
               <SkipForward size={24} />
             </button>
-            <button className="text-gray-400 hover:text-white transition-colors">
+            <button
+              ref={repeatBtnRef}
+              onClick={handleRepeat}
+              className={`transition-colors ${repeat ? 'text-green-500 scale-110' : 'text-gray-400 hover:text-white'}`}
+            >
               <Repeat size={20} />
             </button>
           </div>
@@ -146,17 +203,43 @@ const Player: React.FC = () => {
         </div>
 
         {/* Volume Control */}
-        <div className="flex items-center space-x-3 flex-1 justify-end">
-          <Volume2 size={20} className="text-gray-400" />
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value={volume}
-            onChange={handleVolumeChange}
-            className="w-20 accent-white"
-          />
+        <div className="flex items-center space-x-3 flex-1 justify-end w-full md:w-auto">
+          {/* Mobile: Volume icon toggles vertical slider */}
+          <div className="relative md:hidden volume-control-mobile">
+            <button
+              onClick={() => setShowVolume((v) => !v)}
+              className="p-2"
+            >
+              <Volume2 size={20} className="text-gray-400" />
+            </button>
+            {showVolume && (
+              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 bg-black/90 p-2 rounded-lg shadow-lg flex flex-col items-center z-50">
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={volume}
+                  onChange={handleVolumeChange}
+                  className="w-1 h-24 accent-green-500 rounded-full"
+                  style={{  WebkitAppearance: 'slider-vertical' }}
+                />
+              </div>
+            )}
+          </div>
+          {/* Desktop: Always show horizontal slider */}
+          <div className="hidden md:flex items-center space-x-2">
+            <Volume2 size={20} className="text-gray-400" />
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={volume}
+              onChange={handleVolumeChange}
+              className="h-1 w-36 accent-green-500 rounded-full"
+            />
+          </div>
         </div>
       </div>
     </div>
