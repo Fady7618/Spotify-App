@@ -35,11 +35,11 @@ const Library: React.FC = () => {
   ];
 
   return (
-    <div className="p-6 pb-32 bg-gradient-to-b from-gray-900 to-black min-h-screen">
+    <div className="p-6 pb-32 min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white transition-colors duration-300 ease-in-out">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center space-x-6">
-          <h1 className="text-3xl font-bold text-white">Your Library</h1>
+          <h1 className="text-3xl font-bold">Your Library</h1>
           <div className="flex space-x-1">
             {tabs.map((tab) => (
               <button
@@ -47,8 +47,8 @@ const Library: React.FC = () => {
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`px-4 py-2 rounded-full transition-colors ${
                   activeTab === tab.id
-                    ? 'bg-white text-black'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                    ? 'bg-gray-900 text-white dark:bg-white dark:text-black'
+                    : 'bg-gray-200 text-gray-900 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700'
                 }`}
               >
                 {tab.label}
@@ -60,15 +60,15 @@ const Library: React.FC = () => {
         <div className="flex items-center space-x-2">
           <button
             onClick={() => setViewMode('grid')}
-            className={`p-2 rounded ${viewMode === 'grid' ? 'bg-gray-700' : 'hover:bg-gray-800'}`}
+            className={`p-2 rounded ${viewMode === 'grid' ? 'bg-gray-300 dark:bg-gray-700' : 'hover:bg-gray-200 dark:hover:bg-gray-800'}`}
           >
-            <Grid3X3 size={20} className="text-gray-400" />
+            <Grid3X3 size={20} className="text-gray-500 dark:text-gray-400" />
           </button>
           <button
             onClick={() => setViewMode('list')}
-            className={`p-2 rounded ${viewMode === 'list' ? 'bg-gray-700' : 'hover:bg-gray-800'}`}
+            className={`p-2 rounded ${viewMode === 'list' ? 'bg-gray-300 dark:bg-gray-700' : 'hover:bg-gray-200 dark:hover:bg-gray-800'}`}
           >
-            <List size={20} className="text-gray-400" />
+            <List size={20} className="text-gray-500 dark:text-gray-400" />
           </button>
         </div>
       </div>
@@ -106,7 +106,7 @@ const Library: React.FC = () => {
           <div className="space-y-8">
             {/* Recently Played Tracks */}
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">Recently played tracks</h2>
+              <h2 className="text-xl font-bold mb-4">Recently played tracks</h2>
               <div className="space-y-1">
                 {mockTracks.slice(0, 5).map((track, index) => (
                   <TrackItem
@@ -121,7 +121,7 @@ const Library: React.FC = () => {
 
             {/* Recently Played Albums */}
             <div>
-              <h2 className="text-xl font-bold text-white mb-4">Recently played albums</h2>
+              <h2 className="text-xl font-bold mb-4">Recently played albums</h2>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                 {mockAlbums.map((album) => (
                   <AlbumCard key={album.id} album={album} />
@@ -133,13 +133,13 @@ const Library: React.FC = () => {
 
         {activeTab === 'playlists' && (
           <div>
-            <h2 className="text-xl font-bold text-white mb-4">Your playlists</h2>
+            <h2 className="text-xl font-bold mb-4">Your playlists</h2>
             <div className={viewMode === 'grid' ? 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6' : 'space-y-2'}>
               {mockPlaylists.map((playlist) => (
                 <div key={playlist.id} className={`cursor-pointer group ${
                   viewMode === 'list' 
-                    ? 'flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-800/50'
-                    : 'bg-gray-800/50 p-4 rounded-lg hover:bg-gray-800/70 transition-colors'
+                    ? 'flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800/50'
+                    : 'bg-gray-200 dark:bg-gray-800/50 p-4 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-800/70 transition-colors'
                 }`}>
                   <img
                     src={playlist.coverUrl}
@@ -147,10 +147,10 @@ const Library: React.FC = () => {
                     className={viewMode === 'list' ? 'w-12 h-12 rounded' : 'w-full aspect-square rounded-lg mb-4'}
                   />
                   <div className={viewMode === 'list' ? 'flex-1' : ''}>
-                    <h3 className="text-white font-semibold truncate">{playlist.title}</h3>
-                    <p className="text-gray-400 text-sm truncate">{playlist.description}</p>
+                    <h3 className="font-semibold truncate">{playlist.title}</h3>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm truncate">{playlist.description}</p>
                     {viewMode === 'list' && (
-                      <p className="text-gray-500 text-xs">{playlist.tracks.length} songs</p>
+                      <p className="text-gray-400 dark:text-gray-500 text-xs">{playlist.tracks.length} songs</p>
                     )}
                   </div>
                 </div>
@@ -161,7 +161,7 @@ const Library: React.FC = () => {
 
         {activeTab === 'albums' && (
           <div>
-            <h2 className="text-xl font-bold text-white mb-4">Your albums</h2>
+            <h2 className="text-xl font-bold mb-4">Your albums</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
               {mockAlbums.map((album) => (
                 <AlbumCard key={album.id} album={album} />
@@ -172,9 +172,9 @@ const Library: React.FC = () => {
 
         {activeTab === 'artists' && (
           <div>
-            <h2 className="text-xl font-bold text-white mb-4">Your artists</h2>
+            <h2 className="text-xl font-bold mb-4">Your artists</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-              <div className="bg-gray-800/50 p-4 rounded-lg cursor-pointer hover:bg-gray-800/70 transition-colors group text-center">
+              <div className="bg-gray-200 dark:bg-gray-800/50 p-4 rounded-lg cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-800/70 transition-colors group text-center">
                 <div className="relative mb-4">
                   <img
                     src="https://images.pexels.com/photos/1587927/pexels-photo-1587927.jpeg?auto=compress&cs=tinysrgb&w=300"
@@ -182,8 +182,8 @@ const Library: React.FC = () => {
                     className="w-full aspect-square object-cover rounded-full shadow-lg"
                   />
                 </div>
-                <h3 className="text-white font-semibold mb-1 truncate">The Weeknd</h3>
-                <p className="text-gray-400 text-sm">Artist • Following</p>
+                <h3 className="font-semibold mb-1 truncate">The Weeknd</h3>
+                <p className="text-gray-500 dark:text-gray-400 text-sm">Artist • Following</p>
               </div>
             </div>
           </div>

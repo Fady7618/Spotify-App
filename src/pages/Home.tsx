@@ -54,11 +54,11 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="p-6 pb-32 bg-gradient-to-b from-gray-900 via-gray-900 to-black min-h-screen">
+    <div className="p-6 pb-32 min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white transition-colors duration-300 ease-in-out">
       {/* Greeting */}
       <div ref={greetingRef} className="mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2">{getGreeting()}</h1>
-        <p className="text-gray-400">Welcome back to your music</p>
+        <h1 className="text-4xl font-bold mb-2">{getGreeting()}</h1>
+        <p className="text-gray-500 dark:text-gray-400">Welcome back to your music</p>
       </div>
 
       {/* Quick Play Grid */}
@@ -66,13 +66,13 @@ const Home: React.FC = () => {
         ref={el => el && (sectionsRef.current[0] = el)}
         className="mb-8"
       >
-        <h2 className="text-2xl font-bold text-white mb-4">Jump back in</h2>
+        <h2 className="text-2xl font-bold mb-4">Jump back in</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {quickPlayItems.map((track) => (
             <div
               key={track.id}
               onClick={() => playTrack(track, mockTracks)}
-              className="bg-gray-800/50 rounded-lg p-3 flex items-center space-x-4 cursor-pointer hover:bg-gray-700/50 transition-colors group"
+              className="bg-gray-200 dark:bg-gray-800/50 rounded-lg p-3 flex items-center space-x-4 cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700/50 transition-colors group"
             >
               <img
                 src={track.coverUrl}
@@ -80,8 +80,8 @@ const Home: React.FC = () => {
                 className="w-16 h-16 rounded object-cover"
               />
               <div className="flex-1 min-w-0">
-                <h3 className="text-white font-medium truncate">{track.title}</h3>
-                <p className="text-gray-400 text-sm truncate">{track.artist}</p>
+                <h3 className="font-medium truncate">{track.title}</h3>
+                <p className="text-gray-500 dark:text-gray-400 text-sm truncate">{track.artist}</p>
               </div>
               <div className="opacity-0 group-hover:opacity-100 transition-opacity">
                 <button className="bg-green-500 text-black p-2 rounded-full hover:scale-110 transition-transform">
@@ -98,10 +98,10 @@ const Home: React.FC = () => {
         ref={el => el && (sectionsRef.current[1] = el)}
         className="mb-8"
       >
-        <h2 className="text-2xl font-bold text-white mb-4">Made for you</h2>
+        <h2 className="text-2xl font-bold mb-4">Made for you</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {mockPlaylists.map((playlist) => (
-            <div key={playlist.id} className="bg-gray-800/50 p-4 rounded-lg cursor-pointer hover:bg-gray-800/70 transition-colors group">
+            <div key={playlist.id} className="bg-gray-200 dark:bg-gray-800/50 p-4 rounded-lg cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-800/70 transition-colors group">
               <div className="relative mb-4">
                 <img
                   src={playlist.coverUrl}
@@ -112,8 +112,8 @@ const Home: React.FC = () => {
                   <Play size={20} fill="currentColor" />
                 </button>
               </div>
-              <h3 className="text-white font-semibold mb-1 truncate">{playlist.title}</h3>
-              <p className="text-gray-400 text-sm line-clamp-2">{playlist.description}</p>
+              <h3 className="font-semibold mb-1 truncate">{playlist.title}</h3>
+              <p className="text-gray-500 dark:text-gray-400 text-sm line-clamp-2">{playlist.description}</p>
             </div>
           ))}
         </div>
@@ -124,7 +124,7 @@ const Home: React.FC = () => {
         ref={el => el && (sectionsRef.current[2] = el)}
         className="mb-8"
       >
-        <h2 className="text-2xl font-bold text-white mb-4">Recently played</h2>
+        <h2 className="text-2xl font-bold mb-4">Recently played</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {mockAlbums.map((album) => (
             <AlbumCard key={album.id} album={album} />

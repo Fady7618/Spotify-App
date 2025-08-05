@@ -85,18 +85,18 @@ const Search: React.FC = () => {
   ];
 
   return (
-    <div className="p-6 pb-32 bg-gradient-to-b from-gray-900 to-black min-h-screen">
+    <div className="p-6 pb-32 min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white transition-colors duration-300 ease-in-out">
       {/* Search Input */}
       <div className="mb-8">
         <div className="relative max-w-md">
-          <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+          <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={20} />
           <input
             ref={searchRef}
             type="text"
             placeholder="What do you want to listen to?"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 bg-gray-800 text-white rounded-full border-none outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200"
+            className="w-full pl-10 pr-4 py-3 bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white rounded-full border-none outline-none focus:ring-2 focus:ring-green-500 transition-all duration-200"
           />
         </div>
       </div>
@@ -107,8 +107,8 @@ const Search: React.FC = () => {
           {/* Top Result */}
           {(filteredTracks.length > 0 || filteredAlbums.length > 0 || filteredArtists.length > 0) && (
             <div>
-              <h2 className="text-2xl font-bold text-white mb-4">Top result</h2>
-              <div className="bg-gray-800/50 rounded-lg p-6 max-w-sm cursor-pointer hover:bg-gray-800/70 transition-colors">
+              <h2 className="text-2xl font-bold mb-4">Top result</h2>
+              <div className="bg-gray-200 dark:bg-gray-800/50 rounded-lg p-6 max-w-sm cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-800/70 transition-colors">
                 {filteredTracks[0] && (
                   <div className="flex items-center space-x-4">
                     <img
@@ -117,9 +117,9 @@ const Search: React.FC = () => {
                       className="w-20 h-20 rounded-lg object-cover"
                     />
                     <div>
-                      <h3 className="text-white font-bold text-xl mb-1">{filteredTracks[0].title}</h3>
-                      <p className="text-gray-400">{filteredTracks[0].artist}</p>
-                      <span className="inline-block mt-2 px-3 py-1 bg-gray-700 text-white text-xs rounded-full">
+                      <h3 className="font-bold text-xl mb-1">{filteredTracks[0].title}</h3>
+                      <p className="text-gray-500 dark:text-gray-400">{filteredTracks[0].artist}</p>
+                      <span className="inline-block mt-2 px-3 py-1 bg-gray-300 dark:bg-gray-700 text-gray-900 dark:text-white text-xs rounded-full">
                         Song
                       </span>
                     </div>
@@ -132,7 +132,7 @@ const Search: React.FC = () => {
           {/* Songs */}
           {filteredTracks.length > 0 && (
             <div>
-              <h2 className="text-2xl font-bold text-white mb-4">Songs</h2>
+              <h2 className="text-2xl font-bold mb-4">Songs</h2>
               <div className="space-y-1">
                 {filteredTracks.slice(0, 5).map((track, index) => (
                   <TrackItem
@@ -149,7 +149,7 @@ const Search: React.FC = () => {
           {/* Albums */}
           {filteredAlbums.length > 0 && (
             <div>
-              <h2 className="text-2xl font-bold text-white mb-4">Albums</h2>
+              <h2 className="text-2xl font-bold mb-4">Albums</h2>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                 {filteredAlbums.map((album) => (
                   <AlbumCard key={album.id} album={album} />
@@ -161,10 +161,10 @@ const Search: React.FC = () => {
           {/* Artists */}
           {filteredArtists.length > 0 && (
             <div>
-              <h2 className="text-2xl font-bold text-white mb-4">Artists</h2>
+              <h2 className="text-2xl font-bold mb-4">Artists</h2>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                 {filteredArtists.map((artist) => (
-                  <div key={artist.id} className="bg-gray-800/50 p-4 rounded-lg cursor-pointer hover:bg-gray-800/70 transition-colors group text-center">
+                  <div key={artist.id} className="bg-gray-200 dark:bg-gray-800/50 p-4 rounded-lg cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-800/70 transition-colors group text-center">
                     <div className="relative mb-4">
                       <img
                         src={artist.imageUrl}
@@ -172,8 +172,8 @@ const Search: React.FC = () => {
                         className="w-full aspect-square object-cover rounded-full shadow-lg"
                       />
                     </div>
-                    <h3 className="text-white font-semibold mb-1 truncate">{artist.name}</h3>
-                    <p className="text-gray-400 text-sm">Artist</p>
+                    <h3 className="font-semibold mb-1 truncate">{artist.name}</h3>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm">Artist</p>
                   </div>
                 ))}
               </div>
@@ -183,8 +183,8 @@ const Search: React.FC = () => {
           {/* No Results */}
           {!isSearching && query && filteredTracks.length === 0 && filteredAlbums.length === 0 && filteredArtists.length === 0 && (
             <div className="text-center py-12">
-              <h2 className="text-2xl font-bold text-white mb-2">No results found for "{query}"</h2>
-              <p className="text-gray-400">Please make sure your words are spelled correctly, or use fewer or different keywords.</p>
+              <h2 className="text-2xl font-bold mb-2">No results found for "{query}"</h2>
+              <p className="text-gray-500 dark:text-gray-400">Please make sure your words are spelled correctly, or use fewer or different keywords.</p>
             </div>
           )}
         </div>
@@ -193,7 +193,7 @@ const Search: React.FC = () => {
       {/* Browse Categories */}
       {!query && (
         <div>
-          <h2 className="text-2xl font-bold text-white mb-6">Browse all</h2>
+          <h2 className="text-2xl font-bold mb-6">Browse all</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {genres.map((genre) => (
               <div

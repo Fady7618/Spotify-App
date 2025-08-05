@@ -17,8 +17,8 @@ const Album: React.FC = () => {
   
   if (!album) {
     return (
-      <div className="p-6 text-center">
-        <h1 className="text-2xl font-bold text-white">Album not found</h1>
+      <div className="p-6 text-center bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white min-h-screen transition-colors duration-300 ease-in-out">
+        <h1 className="text-2xl font-bold">Album not found</h1>
       </div>
     );
   }
@@ -69,18 +69,18 @@ const Album: React.FC = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b from-gray-800 via-gray-900 to-black min-h-screen pb-32">
+    <div className="min-h-screen pb-32 bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white transition-colors duration-300">
       {/* Album Header */}
-      <div ref={headerRef} className="flex items-end space-x-6 p-6 bg-gradient-to-b from-gray-700 to-gray-900">
+      <div ref={headerRef} className="flex items-end space-x-6 p-6 bg-gray-200 dark:bg-gray-800">
         <img
           src={album.coverUrl}
           alt={album.title}
           className="w-56 h-56 rounded-lg shadow-2xl"
         />
         <div className="flex-1">
-          <p className="text-sm font-medium text-white mb-2">ALBUM</p>
-          <h1 className="text-5xl font-bold text-white mb-4">{album.title}</h1>
-          <div className="flex items-center space-x-2 text-gray-300">
+          <p className="text-sm font-medium mb-2">ALBUM</p>
+          <h1 className="text-5xl font-bold mb-4">{album.title}</h1>
+          <div className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
             <img
               src="https://images.pexels.com/photos/1587927/pexels-photo-1587927.jpeg?auto=compress&cs=tinysrgb&w=50"
               alt={album.artist}
@@ -105,10 +105,10 @@ const Album: React.FC = () => {
         >
           {isAlbumPlaying ? <Pause size={28} /> : <Play size={28} />}
         </button>
-        <button className="text-gray-400 hover:text-white transition-colors">
+        <button className="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
           <Heart size={32} />
         </button>
-        <button className="text-gray-400 hover:text-white transition-colors">
+        <button className="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors">
           <MoreHorizontal size={32} />
         </button>
       </div>
@@ -116,11 +116,11 @@ const Album: React.FC = () => {
       {/* Track List */}
       <div className="px-6">
         {/* Track List Header */}
-        <div className="grid grid-cols-[16px_1fr_1fr_50px] gap-4 px-2 py-2 border-b border-gray-700 mb-2">
-          <div className="text-gray-400 text-sm">#</div>
-          <div className="text-gray-400 text-sm">TITLE</div>
-          <div className="text-gray-400 text-sm">ALBUM</div>
-          <div className="text-gray-400 text-sm flex justify-end">
+        <div className="grid grid-cols-[16px_1fr_1fr_50px] gap-4 px-2 py-2 border-b border-gray-300 dark:border-gray-700 mb-2">
+          <div className="text-gray-500 dark:text-gray-400 text-sm">#</div>
+          <div className="text-gray-500 dark:text-gray-400 text-sm">TITLE</div>
+          <div className="text-gray-500 dark:text-gray-400 text-sm">ALBUM</div>
+          <div className="text-gray-500 dark:text-gray-400 text-sm flex justify-end">
             <Clock size={16} />
           </div>
         </div>
@@ -141,8 +141,8 @@ const Album: React.FC = () => {
 
       {/* Album Info */}
       <div className="p-6 mt-8">
-        <div className="text-gray-300 leading-relaxed">
-          <p className="text-sm text-gray-400 mb-2">{album.year}</p>
+        <div className="text-gray-700 dark:text-gray-300 leading-relaxed">
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{album.year}</p>
           <p>
             Experience the artistry of {album.artist} with this incredible {album.genre.toLowerCase()} album. 
             Each track tells a story, creating a cohesive musical journey that showcases the artist's 
