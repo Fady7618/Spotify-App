@@ -15,13 +15,13 @@ function App() {
     <ThemeProvider>
       <AudioProvider>
         <Router>
-          <div className="flex h-screen bg-gray-900 text-white">
+          <div className="flex h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white transition-colors duration-300">
             <Sidebar />
             
             <div className="flex-1 flex flex-col lg:ml-0">
               <TopNav />
               
-              <main className="flex-1 overflow-auto">
+              <main className="flex-1 overflow-auto bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white transition-colors duration-300">
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/search" element={<Search />} />

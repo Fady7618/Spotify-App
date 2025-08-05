@@ -19,22 +19,26 @@ const Sidebar: React.FC = () => {
       {/* Mobile Menu Button */}
       <button
         onClick={toggleSidebar}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-black/80 backdrop-blur-md rounded-full text-white"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-black/80 dark:bg-gray-200 dark:text-gray-900 backdrop-blur-md rounded-full text-white transition-colors"
       >
         {isCollapsed ? <Menu size={20} /> : <X size={20} />}
       </button>
 
       {/* Sidebar */}
       <div className={`
-        fixed lg:relative inset-y-0 left-0 z-40 w-64 bg-black text-white p-6 
+        fixed lg:relative inset-y-0 left-0 z-40 w-64 bg-gray-100 dark:bg-black text-gray-900 dark:text-white p-6 
         transform transition-transform duration-300 ease-in-out
         ${isCollapsed ? '-translate-x-full lg:translate-x-0 lg:w-20' : 'translate-x-0'}
         lg:transform-none
       `}>
         {/* Logo */}
         <div className="flex items-center mb-8">
-          <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
-            <span className="text-white font-bold text-sm">S</span>
+          <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center overflow-hidden">
+            <img
+              src="/spotify.png"
+              alt="Spotify Logo"
+              className="w-6 h-6 object-contain"
+            />
           </div>
           {!isCollapsed && <span className="ml-3 text-xl font-bold">Spotify</span>}
         </div>
@@ -48,8 +52,8 @@ const Sidebar: React.FC = () => {
               className={({ isActive }) => `
                 flex items-center p-3 rounded-lg transition-colors duration-200
                 ${isActive 
-                  ? 'bg-gray-800 text-white' 
-                  : 'text-gray-400 hover:text-white hover:bg-gray-800/50'
+                  ? 'bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white' 
+                  : 'text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200/50 dark:hover:bg-gray-800/50'
                 }
               `}
             >
@@ -62,12 +66,12 @@ const Sidebar: React.FC = () => {
         {!isCollapsed && (
           <>
             {/* Create Playlist */}
-            <div className="border-t border-gray-800 pt-6 mb-6">
-              <button className="flex items-center p-3 text-gray-400 hover:text-white transition-colors duration-200">
+            <div className="border-t border-gray-300 dark:border-gray-800 pt-6 mb-6">
+              <button className="flex items-center p-3 text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200">
                 <Plus size={20} />
                 <span className="ml-3">Create Playlist</span>
               </button>
-              <button className="flex items-center p-3 text-gray-400 hover:text-white transition-colors duration-200">
+              <button className="flex items-center p-3 text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200">
                 <Heart size={20} />
                 <span className="ml-3">Liked Songs</span>
               </button>
@@ -75,14 +79,14 @@ const Sidebar: React.FC = () => {
 
             {/* Playlists */}
             <div className="space-y-2">
-              <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">
+              <h3 className="text-xs font-semibold text-gray-700 dark:text-gray-400 uppercase tracking-wider mb-4">
                 Recently Created
               </h3>
               {mockPlaylists.map((playlist) => (
                 <NavLink
                   key={playlist.id}
                   to={`/playlist/${playlist.id}`}
-                  className="block p-2 text-gray-400 hover:text-white transition-colors duration-200 truncate"
+                  className="block p-2 text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 truncate"
                 >
                   {playlist.title}
                 </NavLink>
@@ -95,7 +99,7 @@ const Sidebar: React.FC = () => {
       {/* Mobile Overlay */}
       {!isCollapsed && (
         <div 
-          className="lg:hidden fixed inset-0 bg-black/50 z-30"
+          className="lg:hidden fixed inset-0 bg-black/50 dark:bg-gray-900/50 z-30"
           onClick={toggleSidebar}
         />
       )}

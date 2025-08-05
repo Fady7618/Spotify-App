@@ -12,7 +12,7 @@ const TopNav: React.FC = () => {
   const canGoForward = false; // Simplified for demo
 
   return (
-    <div className="flex items-center justify-between p-4 bg-gradient-to-r from-transparent to-black/20 backdrop-blur-sm">
+    <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-transparent dark:to-black/20 dark:bg-gradient-to-r backdrop-blur-sm transition-colors duration-300">
       {/* Navigation Buttons */}
       <div className="flex items-center space-x-2">
         <button
@@ -21,8 +21,8 @@ const TopNav: React.FC = () => {
           className={`
             p-2 rounded-full transition-all duration-200
             ${canGoBack 
-              ? 'bg-black/40 hover:bg-black/60 text-white' 
-              : 'bg-black/20 text-gray-500 cursor-not-allowed'
+              ? 'bg-gray-300 hover:bg-gray-400 text-gray-900 dark:bg-black/40 dark:hover:bg-black/60 dark:text-white' 
+              : 'bg-gray-200 text-gray-500 cursor-not-allowed dark:bg-black/20 dark:text-gray-500'
             }
           `}
         >
@@ -34,8 +34,8 @@ const TopNav: React.FC = () => {
           className={`
             p-2 rounded-full transition-all duration-200
             ${canGoForward 
-              ? 'bg-black/40 hover:bg-black/60 text-white' 
-              : 'bg-black/20 text-gray-500 cursor-not-allowed'
+              ? 'bg-gray-300 hover:bg-gray-400 text-gray-900 dark:bg-black/40 dark:hover:bg-black/60 dark:text-white' 
+              : 'bg-gray-200 text-gray-500 cursor-not-allowed dark:bg-black/20 dark:text-gray-500'
             }
           `}
         >
@@ -45,7 +45,7 @@ const TopNav: React.FC = () => {
 
       {/* Page Title */}
       <div className="flex-1 text-center">
-        <h1 className="text-2xl font-bold text-white">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           {location.pathname === '/' && 'Good evening'}
           {location.pathname === '/search' && 'Search'}
           {location.pathname === '/library' && 'Your Library'}
@@ -59,11 +59,11 @@ const TopNav: React.FC = () => {
       <div className="flex items-center space-x-3">
         <button
           onClick={toggleTheme}
-          className="p-2 rounded-full bg-black/40 hover:bg-black/60 text-white transition-all duration-200"
+          className="p-2 rounded-full bg-gray-300 hover:bg-gray-400 text-gray-900 dark:bg-black/40 dark:hover:bg-black/60 dark:text-white transition-all duration-200"
         >
           {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
         </button>
-        <button className="p-2 rounded-full bg-black/40 hover:bg-black/60 text-white transition-all duration-200">
+        <button className="p-2 rounded-full bg-gray-300 hover:bg-gray-400 text-gray-900 dark:bg-black/40 dark:hover:bg-black/60 dark:text-white transition-all duration-200">
           <User size={20} />
         </button>
       </div>
