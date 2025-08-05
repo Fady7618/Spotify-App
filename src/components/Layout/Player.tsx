@@ -213,16 +213,16 @@ const Player: React.FC = () => {
               <Volume2 size={20} className="text-gray-400" />
             </button>
             {showVolume && (
-              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 bg-black/90 p-2 rounded-lg shadow-lg flex flex-col items-center z-50">
+              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 bg-transparent p-2 rounded-lg shadow-lg flex flex-col items-center z-50">
                 <input
                   type="range"
                   min="0"
-                  max="1"
-                  step="0.01"
+                  max="100"
+                  step="1"
                   value={volume}
                   onChange={handleVolumeChange}
                   className="w-1 h-24 accent-green-500 rounded-full"
-                  style={{  WebkitAppearance: 'slider-vertical' }}
+                  style={{ writingMode: 'vertical-lr', WebkitAppearance: 'slider-vertical' }}
                 />
               </div>
             )}
@@ -233,8 +233,8 @@ const Player: React.FC = () => {
             <input
               type="range"
               min="0"
-              max="1"
-              step="0.01"
+              max="100"
+              step="1"
               value={volume}
               onChange={handleVolumeChange}
               className="h-1 w-36 accent-green-500 rounded-full"

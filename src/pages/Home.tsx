@@ -11,7 +11,13 @@ gsap.registerPlugin(ScrollTrigger);
 const Home: React.FC = () => {
   const { playTrack } = useAudio();
   const greetingRef = useRef<HTMLDivElement>(null);
-  const sectionsRef = useRef<HTMLDivElement[]>([]);
+  const sectionRefs = [
+    useRef<HTMLDivElement>(null),
+    useRef<HTMLDivElement>(null),
+    useRef<HTMLDivElement>(null)
+  ];
+  console.log(sectionRefs);
+  
 
   useEffect(() => {
     // Greeting animation
@@ -21,27 +27,6 @@ const Home: React.FC = () => {
         { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
       );
     }
-
-    // Sections scroll animation
-    sectionsRef.current.forEach((section, index) => {
-      if (section) {
-        gsap.fromTo(section,
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            delay: index * 0.1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: section,
-              start: "top 80%",
-              toggleActions: "play none none reverse"
-            }
-          }
-        );
-      }
-    });
   }, []);
 
   const quickPlayItems = mockTracks.slice(0, 6);
@@ -62,10 +47,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Quick Play Grid */}
-      <div 
-        ref={el => el && (sectionsRef.current[0] = el)}
-        className="mb-8"
-      >
+      <div ref={sectionRefs[0]} className="mb-8">
         <h2 className="text-2xl font-bold mb-4">Jump back in</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {quickPlayItems.map((track) => (
@@ -94,10 +76,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Featured Playlists */}
-      <div 
-        ref={el => el && (sectionsRef.current[1] = el)}
-        className="mb-8"
-      >
+      <div ref={sectionRefs[1]} className="mb-8">
         <h2 className="text-2xl font-bold mb-4">Made for you</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {mockPlaylists.map((playlist) => (
@@ -120,10 +99,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Recently Played Albums */}
-      <div 
-        ref={el => el && (sectionsRef.current[2] = el)}
-        className="mb-8"
-      >
+      <div ref={sectionRefs[2]} className="mb-8">
         <h2 className="text-2xl font-bold mb-4">Recently played</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {mockAlbums.map((album) => (
